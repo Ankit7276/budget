@@ -10,8 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css" />
-</head>
 
+    <script>
+        function navigateToProject() {
+            window.location.href = "calculater.html"; // Change this to your project's URL
+        }
+    </script>
+
+</head>
+    
 <body>
     <div class="wrapper">
         <div class="container">
@@ -60,11 +67,15 @@
         </div>
         <!-- Add this inside your wrapper or near the list -->
         <button id="print-button" class="submit">Print Budget</button>
+        <button id="clear-data-button" class="submit">Clear</button>
+        <!-- <button  class="submit" src="calculater.html" >calculator</button> -->
+        <button class="submit" type="button" onclick="navigateToProject()">calculator</button>
 
 
     </div>
     <!-- Script -->
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
+    <script src="test.js"></script>
 </body>
 
 </html>
