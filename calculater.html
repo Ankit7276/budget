@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <style>
+        #calculator {
+            max-width: 300px;
+            /* Maximum width */
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+        }
+
+        #calc-display {
+            width: 100%;
+            padding: 15px;
+            font-size: 24px;
+            /* Adjust font size */
+            text-align: right;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+
+        .calc-buttons button {
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            background-color: #e1e1e1;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calc-buttons button:hover {
+            background-color: #d1d1d1;
+        }
+
+        .calc-buttons button:active {
+            background-color: #c1c1c1;
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 600px) {
+            #calculator {
+                padding: 15px;
+                /* Adjust padding */
+                width: 90%;
+                /* Make it responsive */
+            }
+
+            #calc-display {
+                font-size: 20px;
+                /* Adjust font size for smaller screens */
+            }
+
+            .calc-buttons {
+                grid-template-columns: repeat(4, 1fr);
+                /* Keep the same grid, but adjust for smaller screens */
+            }
+
+            .calc-buttons button {
+                font-size: 16px;
+                /* Adjust font size for smaller screens */
+                padding: 15px;
+                /* Adjust padding */
+            }
+        }
+
+        /* Media query for very small screens (e.g., mobile) */
+        @media (max-width: 400px) {
+            #calc-display {
+                font-size: 18px;
+                /* Further reduce font size */
+            }
+
+            .calc-buttons button {
+                font-size: 14px;
+                /* Further reduce font size */
+                padding: 12px;
+                /* Adjust padding */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="calculator">
+        <input type="text" id="calc-display" readonly>
+        <div class="calc-buttons">
+            <button onclick="appendToCalc('7')">7</button>
+            <button onclick="appendToCalc('8')">8</button>
+            <button onclick="appendToCalc('9')">9</button>
+            <button onclick="appendToCalc('/')">÷</button>
+
+            <button onclick="appendToCalc('4')">4</button>
+            <button onclick="appendToCalc('5')">5</button>
+            <button onclick="appendToCalc('6')">6</button>
+            <button onclick="appendToCalc('*')">×</button>
+
+            <button onclick="appendToCalc('1')">1</button>
+            <button onclick="appendToCalc('2')">2</button>
+            <button onclick="appendToCalc('3')">3</button>
+            <button onclick="appendToCalc('-')">-</button>
+
+            <button onclick="appendToCalc('0')">0</button>
+            <button onclick="appendToCalc('.')">.</button>
+            <button onclick="calculateResult()">=</button>
+            <button onclick="appendToCalc('+')">+</button>
+
+            <button onclick="clearCalc()">C</button>
+        </div>
+    </div>
+
+    <script>
+
+const calcDisplay = document.getElementById("calc-display");
+
+// Append characters to the calculator display
+function appendToCalc(value) {
+    calcDisplay.value += value;
+}
+
+// Calculate and display the result
+function calculateResult() {
+    try {
+        // Evaluate the expression in the display
+        calcDisplay.value = eval(calcDisplay.value);
+    } catch (error) {
+        calcDisplay.value = "Error";
+    }
+}
+
+// Clear the calculator display
+function clearCalc() {
+    calcDisplay.value = "";
+}
+
+
+    </script>
+
+
+</body>
+
+</html>
