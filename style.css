@@ -190,34 +190,60 @@ body {
 
 
 @media print {
-
-    /* Hide all unnecessary elements */
-    input,
-    button,
-    .error {
-        display: none;
+    body * {
+        visibility: hidden;
     }
 
-    /* Ensure the list and budget information are visible */
-    .list,
-    .output-container {
+    #invoice-print, #invoice-print * {
         visibility: visible;
     }
 
-    /* Optional: Adjust styling for printed content */
-    .list,
-    .output-container {
-        font-size: 14px;
+    #invoice-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .invoice-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .invoice-header h2 {
+        margin: 0;
+    }
+
+    .summary {
+        margin-bottom: 20px;
+    }
+
+    .summary p {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
         margin-top: 10px;
     }
 
-    /* Optional: Add a print header */
-    .list:before {
-        content: "Budget Report";
-        display: block;
-        font-size: 20px;
-        font-weight: bold;
+    table, th, td {
+        border: 1px solid #000;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+    }
+
+    .invoice-footer {
         text-align: center;
-        margin-bottom: 10px;
+        margin-top: 30px;
+        font-size: 14px;
+        font-weight: bold;
     }
 }
