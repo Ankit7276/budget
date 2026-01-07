@@ -14,6 +14,7 @@
     <script>
         function navigateToProject() {
             window.location.href = "calculater.html"; // Change this to your project's URL
+        
         }
     </script>
 
@@ -66,17 +67,48 @@
             <div class="list-container" id="list"></div>
         </div>
         <!-- Add this inside your wrapper or near the list -->
-        <button id="print-button" class="submit">Print</button>
+        <button id="print-button" class="submit">Print Budget</button>
         <button id="clear-data-button" class="submit">Clear</button>
-        <!-- <button  class="submit" src="calculater.html" >calculator</button> -->
-        <button class="submit" type="button" onclick="navigateToProject()">calcy</button>
+        <!-- <button  class="submit" href="calculater.html" >Tasks</button> -->
+        <button class="submit" type="button" onclick="navigateToProject()">calculator</button>
+    
         <a class="submit" href="https://ankit7276.github.io/Todo/">Tasks</a>
 
-
     </div>
-    <!-- Script -->
-    <!-- <script src="script.js"></script> -->
-    <script src="test.js"></script>
+
+    <div id="invoice-print" style="display:none;">
+    <div class="invoice-header">
+        <h2>Budget Invoice</h2>
+        <p>Date: <span id="invoice-date"></span></p>
+    </div>
+
+    <div class="summary">
+        <p><strong>Total Budget:</strong> <span id="invoice-budget"></span></p>
+        <p><strong>Total Expenses:</strong> <span id="invoice-expense"></span></p>
+        <p><strong>Remaining Balance:</strong> <span id="invoice-balance"></span></p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Expense Type</th>
+                <th>Amount (₹)</th>
+            </tr>
+        </thead>
+        <tbody id="invoice-list"></tbody>
+    </table>
+
+    <div class="invoice-footer">
+       Budget App | Ankit
+    </div>
+</div>
+
+<div><h3>Budget History</h3>
+<ul id="history-list"></ul></div>
+
+    
+<script src="test.js"></script>
 </body>
 
 </html>
