@@ -262,3 +262,39 @@ function viewHistory(index) {
     );
 }
 /* ---------- Save history on budget change ---------- */
+
+const whatsappButton = document.getElementById("whatsapp-button");
+
+whatsappButton.addEventListener("click", () => {
+
+    let invoiceText = `📄 *Budget Invoice*
+-------------------------
+👤 Name: Ankit
+📅 Date: ${new Date().toLocaleDateString("en-IN")}
+
+💰 Total Budget: ${amount.innerText}
+💸 Total Expenses: ${expenditureValue.innerText}
+💼 Balance: ${balanceValue.innerText}
+
+🧾 *Expense Details:*
+`;
+
+    document.querySelectorAll(".sublist-content").forEach((item, index) => {
+        let name = item.querySelector(".product").innerText;
+        let price = item.querySelector(".amount").innerText;
+        invoiceText += `${index + 1}. ${name} - ${price}\n`;
+    });
+
+    invoiceText += `
+-------------------------
+📢 My Budget App
+👨‍💻 I am Ankit
+`;
+
+    let encodedMessage = encodeURIComponent(invoiceText);
+
+    // Open WhatsApp
+    window.open(`https://wa.me/?text=${encodedMessage}`, "_blank");
+});
+
+
