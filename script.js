@@ -268,9 +268,17 @@ function viewHistory(index) {
 /* ---------- WHATSAPP SHARE ---------- */
 whatsappButton.addEventListener("click", () => {
 
+    // 🔥 Ask user name
+    let userName = prompt("Enter your name:");
+
+    if (!userName || userName.trim() === "") {
+        alert("Name is required to send invoice.");
+        return;
+    }
+
     let invoiceText = `📄 *Budget Invoice*
 -------------------------
-👤 Name: Ankit
+👤 Name: ${userName}
 📅 Date: ${new Date().toLocaleDateString("en-IN")}
 
 💰 Total Budget: ${amount.innerText}
@@ -289,7 +297,6 @@ whatsappButton.addEventListener("click", () => {
     invoiceText += `
 -------------------------
 📢 My Budget App
-👨‍💻 I am Ankit
 `;
 
     let encodedMessage = encodeURIComponent(invoiceText);
