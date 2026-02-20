@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern Calculator</title>
+<title>Pro Calculator</title>
 
 <style>
 *{
@@ -14,52 +14,61 @@
 }
 
 body{
-    height:100vh;
+    min-height:100vh;
+    background:#0f0f0f;
     display:flex;
     justify-content:center;
-    align-items:center;
-    background:#111;
+    align-items:flex-start; /* Important for top margin */
 }
 
-/* Calculator Container */
-#calculator{
+/* Main Container */
+.container{
     width:100%;
-    max-width:400px;
-    height:95vh;
+    max-width:420px;
+    min-height:calc(100vh - 40px); /* 20px top & bottom */
+    margin:20px 0; /* Top & Bottom 20px */
     background:#1a1a1a;
     border-radius:20px;
     padding:20px;
     display:flex;
     flex-direction:column;
-    box-shadow:0 0 40px rgba(255,140,0,0.3);
+    box-shadow:0 0 50px rgba(255,140,0,0.3);
+}
+
+/* History */
+.history{
+    color:#aaa;
+    font-size:14px;
+    text-align:right;
+    margin-bottom:5px;
+    min-height:20px;
 }
 
 /* Display */
-#calc-display{
-    width:100%;
-    height:80px;
+.display{
     background:#000;
     color:#ff8c00;
-    border:none;
-    border-radius:15px;
     font-size:32px;
-    text-align:right;
     padding:20px;
-    margin-bottom:20px;
-    outline:none;
+    text-align:right;
+    border-radius:15px;
+    min-height:80px;
+    word-wrap:break-word;
+    overflow-x:auto;
 }
 
 /* Buttons Grid */
-.calc-buttons{
+.buttons{
     flex:1;
+    margin-top:15px;
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:12px;
 }
 
 /* Buttons */
-.calc-buttons button{
-    font-size:20px;
+button{
+    font-size:18px;
     border:none;
     border-radius:15px;
     cursor:pointer;
@@ -68,42 +77,37 @@ body{
     transition:0.2s;
 }
 
-/* Hover */
-.calc-buttons button:hover{
+button:hover{
     background:#ff8c00;
     color:#000;
     transform:scale(1.05);
 }
 
-/* Active */
-.calc-buttons button:active{
+button:active{
     transform:scale(0.95);
 }
 
-/* Operator Buttons */
+/* Special Buttons */
 .operator{
     background:#ff8c00;
     color:#000;
+    font-weight:bold;
 }
 
-/* Equal Button */
 .equal{
     background:#ff8c00;
     color:#000;
     font-weight:bold;
 }
 
-/* Clear Button Full Width */
 .clear{
-    grid-column:span 4;
     background:#ff3b3b;
     color:#fff;
 }
 
 @media(max-width:500px){
-    #calculator{
-        height:100vh;
-        border-radius:0;
+    .container{
+        border-radius:20px;
     }
 }
 </style>
@@ -111,70 +115,94 @@ body{
 
 <body>
 
-<div id="calculator">
-    <input type="text" id="calc-display" readonly>
+<div class="container">
 
-    <div class="calc-buttons">
-        <button onclick="appendValue('7')">7</button>
-        <button onclick="appendValue('8')">8</button>
-        <button onclick="appendValue('9')">9</button>
-        <button class="operator" onclick="appendValue('/')">÷</button>
+    <div class="history" id="history"></div>
+    <div class="display" id="display">0</div>
 
-        <button onclick="appendValue('4')">4</button>
-        <button onclick="appendValue('5')">5</button>
-        <button onclick="appendValue('6')">6</button>
-        <button class="operator" onclick="appendValue('*')">×</button>
+    <div class="buttons">
+        <button class="clear" onclick="clearAll()">C</button>
+        <button onclick="backspace()">⌫</button>
+        <button onclick="append('%')">%</button>
+        <button class="operator" onclick="append('/')">÷</button>
 
-        <button onclick="appendValue('1')">1</button>
-        <button onclick="appendValue('2')">2</button>
-        <button onclick="appendValue('3')">3</button>
-        <button class="operator" onclick="appendValue('-')">−</button>
+        <button onclick="append('7')">7</button>
+        <button onclick="append('8')">8</button>
+        <button onclick="append('9')">9</button>
+        <button class="operator" onclick="append('*')">×</button>
 
-        <button onclick="appendValue('0')">0</button>
-        <button onclick="appendValue('.')">.</button>
+        <button onclick="append('4')">4</button>
+        <button onclick="append('5')">5</button>
+        <button onclick="append('6')">6</button>
+        <button class="operator" onclick="append('-')">−</button>
+
+        <button onclick="append('1')">1</button>
+        <button onclick="append('2')">2</button>
+        <button onclick="append('3')">3</button>
+        <button class="operator" onclick="append('+')">+</button>
+
+        <button onclick="toggleSign()">±</button>
+        <button onclick="append('0')">0</button>
+        <button onclick="square()">x²</button>
         <button class="equal" onclick="calculate()">=</button>
-        <button class="operator" onclick="appendValue('+')">+</button>
 
-        <button class="clear" onclick="clearDisplay()">CLEAR</button>
+        <button onclick="squareRoot()">√</button>
     </div>
 </div>
 
 <script>
-const display = document.getElementById("calc-display");
+let display = document.getElementById("display");
+let history = document.getElementById("history");
 
-// Append Value
-function appendValue(value){
-    display.value += value;
+function append(value){
+    if(display.innerText === "0") display.innerText = "";
+    display.innerText += value;
 }
 
-// Calculate Result (Safe)
+function clearAll(){
+    display.innerText = "0";
+    history.innerText = "";
+}
+
+function backspace(){
+    display.innerText = display.innerText.slice(0,-1) || "0";
+}
+
+function toggleSign(){
+    display.innerText = display.innerText.startsWith("-") ?
+        display.innerText.slice(1) :
+        "-" + display.innerText;
+}
+
+function square(){
+    let val = parseFloat(display.innerText);
+    history.innerText = val + "²";
+    display.innerText = val * val;
+}
+
+function squareRoot(){
+    let val = parseFloat(display.innerText);
+    history.innerText = "√" + val;
+    display.innerText = Math.sqrt(val);
+}
+
 function calculate(){
     try{
-        display.value = Function('"use strict";return (' + display.value + ')')();
+        history.innerText = display.innerText;
+        display.innerText = Function('"use strict";return (' + display.innerText + ')')();
     }catch{
-        display.value = "Error";
+        display.innerText = "Error";
     }
 }
 
-// Clear
-function clearDisplay(){
-    display.value = "";
-}
-
-// Keyboard Support
+/* Keyboard Support */
 document.addEventListener("keydown", function(e){
-    if(!isNaN(e.key) || ['+','-','*','/','.'].includes(e.key)){
-        appendValue(e.key);
+    if(!isNaN(e.key) || ['+','-','*','/','.','%'].includes(e.key)){
+        append(e.key);
     }
-    if(e.key === "Enter"){
-        calculate();
-    }
-    if(e.key === "Backspace"){
-        display.value = display.value.slice(0,-1);
-    }
-    if(e.key === "Escape"){
-        clearDisplay();
-    }
+    if(e.key === "Enter") calculate();
+    if(e.key === "Backspace") backspace();
+    if(e.key === "Escape") clearAll();
 });
 </script>
 
