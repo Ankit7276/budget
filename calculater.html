@@ -1,163 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>calculator</title>
-    <style>
-        #calculator {
-            max-width: 300px;
-            /* Maximum width */
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Calculator</title>
 
-        #calc-display {
-            width: 100%;
-            padding: 15px;
-            font-size: 24px;
-            /* Adjust font size */
-            text-align: right;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            background-color: #fff;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
 
-        .calc-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
-        }
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#111;
+}
 
-        .calc-buttons button {
-            padding: 20px;
-            font-size: 18px;
-            border: none;
-            background-color: #e1e1e1;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+/* Calculator Container */
+#calculator{
+    width:100%;
+    max-width:400px;
+    height:95vh;
+    background:#1a1a1a;
+    border-radius:20px;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 0 40px rgba(255,140,0,0.3);
+}
 
-        .calc-buttons button:hover {
-            background-color: #d1d1d1;
-        }
+/* Display */
+#calc-display{
+    width:100%;
+    height:80px;
+    background:#000;
+    color:#ff8c00;
+    border:none;
+    border-radius:15px;
+    font-size:32px;
+    text-align:right;
+    padding:20px;
+    margin-bottom:20px;
+    outline:none;
+}
 
-        .calc-buttons button:active {
-            background-color: #c1c1c1;
-        }
+/* Buttons Grid */
+.calc-buttons{
+    flex:1;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
 
-        /* Media query for smaller screens */
-        @media (max-width: 600px) {
-            #calculator {
-                padding: 15px;
-                /* Adjust padding */
-                width: 90%;
-                /* Make it responsive */
-            }
+/* Buttons */
+.calc-buttons button{
+    font-size:20px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    background:#222;
+    color:#fff;
+    transition:0.2s;
+}
 
-            #calc-display {
-                font-size: 20px;
-                /* Adjust font size for smaller screens */
-            }
+/* Hover */
+.calc-buttons button:hover{
+    background:#ff8c00;
+    color:#000;
+    transform:scale(1.05);
+}
 
-            .calc-buttons {
-                grid-template-columns: repeat(4, 1fr);
-                /* Keep the same grid, but adjust for smaller screens */
-            }
+/* Active */
+.calc-buttons button:active{
+    transform:scale(0.95);
+}
 
-            .calc-buttons button {
-                font-size: 16px;
-                /* Adjust font size for smaller screens */
-                padding: 15px;
-                /* Adjust padding */
-            }
-        }
+/* Operator Buttons */
+.operator{
+    background:#ff8c00;
+    color:#000;
+}
 
-        /* Media query for very small screens (e.g., mobile) */
-        @media (max-width: 400px) {
-            #calc-display {
-                font-size: 18px;
-                /* Further reduce font size */
-            }
+/* Equal Button */
+.equal{
+    background:#ff8c00;
+    color:#000;
+    font-weight:bold;
+}
 
-            .calc-buttons button {
-                font-size: 14px;
-                /* Further reduce font size */
-                padding: 12px;
-                /* Adjust padding */
-            }
-        }
-    </style>
+/* Clear Button Full Width */
+.clear{
+    grid-column:span 4;
+    background:#ff3b3b;
+    color:#fff;
+}
+
+@media(max-width:500px){
+    #calculator{
+        height:100vh;
+        border-radius:0;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div id="calculator">
-        <input type="text" id="calc-display" readonly>
-        <div class="calc-buttons">
-            <button onclick="appendToCalc('7')">7</button>
-            <button onclick="appendToCalc('8')">8</button>
-            <button onclick="appendToCalc('9')">9</button>
-            <button onclick="appendToCalc('/')">÷</button>
+<div id="calculator">
+    <input type="text" id="calc-display" readonly>
 
-            <button onclick="appendToCalc('4')">4</button>
-            <button onclick="appendToCalc('5')">5</button>
-            <button onclick="appendToCalc('6')">6</button>
-            <button onclick="appendToCalc('*')">×</button>
+    <div class="calc-buttons">
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button class="operator" onclick="appendValue('/')">÷</button>
 
-            <button onclick="appendToCalc('1')">1</button>
-            <button onclick="appendToCalc('2')">2</button>
-            <button onclick="appendToCalc('3')">3</button>
-            <button onclick="appendToCalc('-')">-</button>
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button class="operator" onclick="appendValue('*')">×</button>
 
-            <button onclick="appendToCalc('0')">0</button>
-            <button onclick="appendToCalc('.')">.</button>
-            <button onclick="calculateResult()">=</button>
-            <button onclick="appendToCalc('+')">+</button>
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button class="operator" onclick="appendValue('-')">−</button>
 
-            <button onclick="clearCalc()">C</button>
-        </div>
+        <button onclick="appendValue('0')">0</button>
+        <button onclick="appendValue('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+        <button class="operator" onclick="appendValue('+')">+</button>
+
+        <button class="clear" onclick="clearDisplay()">CLEAR</button>
     </div>
+</div>
 
-    <script>
+<script>
+const display = document.getElementById("calc-display");
 
-const calcDisplay = document.getElementById("calc-display");
-
-// Append characters to the calculator display
-function appendToCalc(value) {
-    calcDisplay.value += value;
+// Append Value
+function appendValue(value){
+    display.value += value;
 }
 
-// Calculate and display the result
-function calculateResult() {
-    try {
-        // Evaluate the expression in the display
-        calcDisplay.value = eval(calcDisplay.value);
-    } catch (error) {
-        calcDisplay.value = "Error";
+// Calculate Result (Safe)
+function calculate(){
+    try{
+        display.value = Function('"use strict";return (' + display.value + ')')();
+    }catch{
+        display.value = "Error";
     }
 }
 
-// Clear the calculator display
-function clearCalc() {
-    calcDisplay.value = "";
+// Clear
+function clearDisplay(){
+    display.value = "";
 }
 
-
-    </script>
-
+// Keyboard Support
+document.addEventListener("keydown", function(e){
+    if(!isNaN(e.key) || ['+','-','*','/','.'].includes(e.key)){
+        appendValue(e.key);
+    }
+    if(e.key === "Enter"){
+        calculate();
+    }
+    if(e.key === "Backspace"){
+        display.value = display.value.slice(0,-1);
+    }
+    if(e.key === "Escape"){
+        clearDisplay();
+    }
+});
+</script>
 
 </body>
-
 </html>
